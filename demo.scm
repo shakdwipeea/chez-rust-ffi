@@ -94,3 +94,23 @@
 (define t1 (flip a (make-tuple 12 13)))
 
 (ftype-pointer->sexpr a)
+
+;; Using rust opaque objects
+
+(define-ftype db uptr)
+
+(define db_new (foreign-procedure "zip_code_database_new" () db))
+(define db_free (foreign-procedure "zip_code_database_free" (db) void))
+(define db_populate (foreign-procedure "zip_code_database_populate" (db) void))
+(define db_ref (foreign-procedure "zip_code_database_population_of" (db string) unsigned-32))
+
+(define run
+  (lambda ()
+    (define db (db_new))
+    
+    (begin (db_populate db)
+	   (db_ref db "90210")
+	   (db_ref db "20500")
+	   (db_free db))))
+
+(run)
