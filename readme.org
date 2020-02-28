@@ -1,0 +1,6 @@
+
+
+This repo demonstrates calling rust functions from chez scheme through rust's c abi.
+The rust code is derived from Rust FFI Omnibus.
+
+
