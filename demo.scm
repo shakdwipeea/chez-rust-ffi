@@ -78,3 +78,19 @@
 
 (sum_even (u32-list->ptr arr) (length arr))
 
+
+;; Tuples
+
+(define-foreign-struct tuple
+  ((x unsigned-32)
+   (y unsigned-32)))
+
+;; the caller must provide an extra (* ftype) argument before all other arguments to receive the
+;; result.
+(define flip
+  (foreign-procedure "flip_things_around" ((& tuple)) (& tuple)))
+
+(define a (make-foreign-object tuple))
+(define t1 (flip a (make-tuple 12 13)))
+
+(ftype-pointer->sexpr a)
